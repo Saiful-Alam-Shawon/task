@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { AuthProvider } from '../firebase/Context';
 
 
 
 const NavBar = () => {
+
+    const { user, logOut } = useContext(AuthProvider);
+    const email = user?.email
+
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                // Sign-out successful.
+            }).catch((error) => {
+                // An error happened.
+            });
+    }
+
+
     return (
         <div>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container>
+                    {/* <Navbar.Brand href="/">{email}</Navbar.Brand> */}
                     <Navbar.Brand href="/">Demo-Project</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
@@ -30,10 +47,21 @@ const NavBar = () => {
                         </Nav>
 
                         <Nav>
-                            <Nav.Link href="login">Login</Nav.Link>
-                            <Nav.Link eventKey={2} href="register">
-                                Register
-                            </Nav.Link>
+                            {
+                                email ?
+                                    <>
+                                        <Nav.Link eventKey={2} onClick={handleLogOut}>
+                                            Log Out
+                                        </Nav.Link>
+                                    </>
+                                    :
+                                    <>
+                                        <Nav.Link href="login">Login</Nav.Link>
+                                    </>
+                            }
+
+
+
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

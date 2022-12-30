@@ -2,6 +2,9 @@ import React from 'react';
 import { Button, ButtonGroup, Table } from 'react-bootstrap';
 
 const CompletedTask = () => {
+
+
+
     return (
         <div>
             <Table responsive="sm">

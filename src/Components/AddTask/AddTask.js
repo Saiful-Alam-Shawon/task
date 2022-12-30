@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
+import { AuthProvider } from '../firebase/Context';
 
 const AddTask = () => {
+
+    const { user } = useContext(AuthProvider);
+    const email = user?.email
 
     const handleTask = (event) => {
         event.preventDefault();
@@ -12,7 +16,9 @@ const AddTask = () => {
         // console.log(text);
 
         const ok = {
-            text: text
+            text,
+            email,
+            status: "not"
         }
         // console.log(ok);
 
@@ -27,7 +33,7 @@ const AddTask = () => {
             .then(data => {
                 console.log(data)
                 if (data.acknowledged) {
-                    alert('Order Placed Successfully')
+                    alert('Your Task Added Successfully')
                     form.reset();
                 }
             })
